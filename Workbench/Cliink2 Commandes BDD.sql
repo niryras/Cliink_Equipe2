@@ -4,13 +4,12 @@ USE `CLIIINK2`;
 -- ----------------------------
 -- Table structure for entreprise
 -- ----------------------------
-
 CREATE TABLE IF NOT EXISTS `entreprise` (
   `en_id` int NOT NULL AUTO_INCREMENT,
   `en_siren` int NOT NULL,
   `en_nic` int NOT NULL,
-  `en_dénomination_unité_légal` varchar(50) NOT NULL,
-  `en_activité_principale_établissement` varchar(50) NOT NULL,
+  `en_denomination_unite_legal` varchar(50) NOT NULL,
+  `en_activite_principale_etablissement` varchar(50) NOT NULL,
   `en_adresse` varchar(50) NOT NULL,
   `en_codePostal` int(5) NOT NULL,
   `en_ville` varchar(50) NOT NULL,
@@ -31,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `secteur_activité` (
 -- ----------------------------
 -- Table structure for population
 -- ----------------------------
-
 CREATE TABLE IF NOT EXISTS `population` (
   `po_id` int NOT NULL AUTO_INCREMENT,
   `po_source` varchar(50) NOT NULL,
@@ -46,7 +44,6 @@ CREATE TABLE IF NOT EXISTS `population` (
 -- ----------------------------
 -- Table structure for ville
 -- ----------------------------
-
 CREATE TABLE IF NOT EXISTS `ville` (
   `vi_id` int NOT NULL AUTO_INCREMENT,
   `vi_nom` varchar(50) NOT NULL,
@@ -56,7 +53,6 @@ CREATE TABLE IF NOT EXISTS `ville` (
 -- ----------------------------
 -- Table structure for catégorie_socio_pro
 -- ----------------------------
-
 CREATE TABLE IF NOT EXISTS `catégorie_socio_pro` (
   `csp_id` int NOT NULL AUTO_INCREMENT,
   `csp_nom` varchar(50) NOT NULL,
@@ -76,7 +72,6 @@ CREATE TABLE IF NOT EXISTS `age` (
 -- ----------------------------
 -- Table structure for logement
 -- ----------------------------
-
 CREATE TABLE IF NOT EXISTS `logement` (
   `lo_id` int NOT NULL AUTO_INCREMENT,
   `lo_nbre` varchar(50) NOT NULL,
@@ -88,12 +83,8 @@ CREATE TABLE IF NOT EXISTS `logement` (
 -- ----------------------------
 -- Table structure for catégorie_logement
 -- ----------------------------
-
 CREATE TABLE IF NOT EXISTS `catégorie_logement` (
   `cl_id` int NOT NULL AUTO_INCREMENT,
   `cl_nom` int NOT NULL,
   KEY `ID` (`cl_id`)
 );
-
-
-
