@@ -1,0 +1,14 @@
+{
+
+	"mysql":
+	{
+		"connector": "",
+		"user": "",
+		"password": "",
+		"host": "",
+		"port": "",
+		"bdd": "",
+		"user_name": ""
+	}
+
+}
