@@ -19,9 +19,9 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
 );
 
 -- ----------------------------
--- Table structure for secteur_activité
+-- Table structure for secteur_activite
 -- ----------------------------
-CREATE TABLE IF NOT EXISTS `secteur_activité` (
+CREATE TABLE IF NOT EXISTS `secteur_activite` (
   `sa_id` int NOT NULL AUTO_INCREMENT,
   `sa_nom` varchar(50) NOT NULL,
   KEY `ID` (`sa_id`)
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `secteur_activité` (
 CREATE TABLE IF NOT EXISTS `population` (
   `po_id` int NOT NULL AUTO_INCREMENT,
   `po_source` varchar(50) NOT NULL,
-  `po_année` date NOT NULL,
+  `po_annee` date NOT NULL,
   `po_nbre_pop` int NOT NULL,
   `po_csp_id_fk` int NOT NULL,
   `po_ag_id_fk` int NOT NULL,
@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS `ville` (
 );
 
 -- ----------------------------
--- Table structure for catégorie_socio_pro
+-- Table structure for categorie_socio_pro
 -- ----------------------------
-CREATE TABLE IF NOT EXISTS `catégorie_socio_pro` (
+CREATE TABLE IF NOT EXISTS `categorie_socio_pro` (
   `csp_id` int NOT NULL AUTO_INCREMENT,
   `csp_nom` varchar(50) NOT NULL,
   KEY `ID` (`csp_id`)
@@ -81,9 +81,9 @@ CREATE TABLE IF NOT EXISTS `logement` (
 );
 
 -- ----------------------------
--- Table structure for catégorie_logement
+-- Table structure for categorie_logement
 -- ----------------------------
-CREATE TABLE IF NOT EXISTS `catégorie_logement` (
+CREATE TABLE IF NOT EXISTS `categorie_logement` (
   `cl_id` int NOT NULL AUTO_INCREMENT,
   `cl_nom` int NOT NULL,
   KEY `ID` (`cl_id`)
