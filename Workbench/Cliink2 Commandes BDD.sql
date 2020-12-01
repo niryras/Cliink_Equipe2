@@ -5,14 +5,12 @@ USE `CLIIINK2`;
 -- Table structure for entreprise
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `entreprise` (
-  `en_id` int NOT NULL AUTO_INCREMENT,
+  `en_id` bigint NOT NULL AUTO_INCREMENT,
+  `en_nom` varchar(150),
   `en_siren` int NOT NULL,
   `en_nic` int NOT NULL,
-  `en_denomination_unite_legal` varchar(50) NOT NULL,
-  `en_activite_principale_etablissement` varchar(50) NOT NULL,
-  `en_adresse` varchar(50) NOT NULL,
-  `en_codePostal` int(5) NOT NULL,
-  `en_ville` varchar(50) NOT NULL,
+  `en_adresse` varchar(50),
+  `en_code_postal` int(5),
   `en_vi_id_fk` int NOT NULL,
   `en_sa_id_fk` int NOT NULL,
   KEY `ID` (`en_id`)
@@ -23,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `secteur_activite` (
   `sa_id` int NOT NULL AUTO_INCREMENT,
-  `sa_nom` varchar(50) NOT NULL,
+  `sa_nom` varchar(150) NOT NULL,
   KEY `ID` (`sa_id`)
 );
 
@@ -32,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `secteur_activite` (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `population` (
   `po_id` int NOT NULL AUTO_INCREMENT,
-  `po_source` varchar(50) NOT NULL,
+  `po_source` varchar(100) NOT NULL,
   `po_annee` date NOT NULL,
   `po_nbre_pop` int NOT NULL,
   `po_csp_id_fk` int NOT NULL,

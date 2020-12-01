@@ -2,13 +2,13 @@
 
 	"mysql":
 	{
-		"connector": "",
-		"user": "",
-		"password": "",
-		"host": "",
-		"port": "",
-		"bdd": "",
-		"user_name": ""
+		"connector": "pymysql",
+		"user": "simplon",
+		"password": "^mo{|r{CJ",
+		"host": "localhost",
+		"port": "3306",
+		"bdd": "CLIIINK2",
+		"user_name": "Luca"
 	}
 
 }
