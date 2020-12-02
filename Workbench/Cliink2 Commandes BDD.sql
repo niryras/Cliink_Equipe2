@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `secteur_activite` (
 CREATE TABLE IF NOT EXISTS `population` (
   `po_id` int NOT NULL AUTO_INCREMENT,
   `po_source` varchar(100) NOT NULL,
-  `po_annee` date NOT NULL,
+  `po_annee` int NOT NULL,
   `po_nbre_pop` int NOT NULL,
   `po_csp_id_fk` int NOT NULL,
   `po_ag_id_fk` int NOT NULL,
@@ -83,6 +83,6 @@ CREATE TABLE IF NOT EXISTS `logement` (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `categorie_logement` (
   `cl_id` int NOT NULL AUTO_INCREMENT,
-  `cl_nom` int NOT NULL,
+  `cl_nom` varchar(50) NOT NULL,
   KEY `ID` (`cl_id`)
 );
