@@ -5,7 +5,7 @@ USE `CLIIINK2`;
 -- Table structure for entreprise
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `entreprise` (
-  `en_id` bigint NOT NULL AUTO_INCREMENT,
+  `en_id` bigint NOT NULL,
   `en_nom` varchar(150),
   `en_siren` int NOT NULL,
   `en_nic` int NOT NULL,
