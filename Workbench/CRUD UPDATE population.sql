@@ -1,9 +1,7 @@
 -- ----------------------------
 -- CRUD UPDATE population
 -- ----------------------------
-
 # Procédure stockée de type UPDATE sur la table population
-# Obtenir la liste ds colonnes
 
 DROP PROCEDURE IF EXISTS `update_population`;
 
@@ -40,7 +38,6 @@ po_nbre_pop = po_nbre_pop_, po_csp_id_fk = po_csp_id_fk_, po_ag_id_fk = po_ag_id
 WHERE po_id = po_id_ ;
 
 END ||
-
 DELIMITER ;
 
 # On insère une ligne de test en utilisant la procédure stockée

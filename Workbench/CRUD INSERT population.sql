@@ -1,16 +1,13 @@
 -- ----------------------------
 -- CRUD CREATE population
 -- ----------------------------
-
 # Procédure stockée de type INSERT sur la table population
-# Obtenir la liste ds colonnes
 
 DROP PROCEDURE IF EXISTS `insert_population`;
 
 DELIMITER ||
 CREATE PROCEDURE insert_population (
-				 IN 				po_id_ int, 
-									po_source_ varchar(100), 
+				 IN 				po_source_ varchar(100), 
                                     po_annee_ int, 
                                     po_nbre_pop_ int,
 									po_csp_id_fk_ int,
@@ -34,22 +31,14 @@ IF NOT EXISTS ( SELECT * FROM ville WHERE ville.vi_id = po_vi_id_fk_) THEN
 END IF;
 
 # Insertion
-INSERT INTO population (po_id,po_source,po_annee,po_nbre_pop,po_csp_id_fk,po_ag_id_fk,po_vi_id_fk)
-VALUES (po_id_,po_source_,po_annee_,po_nbre_pop_,po_csp_id_fk_,po_ag_id_fk_,po_vi_id_fk_);
+INSERT INTO population (po_source,po_annee,po_nbre_pop,po_csp_id_fk,po_ag_id_fk,po_vi_id_fk)
+VALUES (po_source_,po_annee_,po_nbre_pop_,po_csp_id_fk_,po_ag_id_fk_,po_vi_id_fk_);
 
 END ||
 DELIMITER ;
 
 # On insère une ligne de test en utilisant la procédure stockée
-CALL insert_population ('123459', 'test_insert', 2017 , 12, 3, 3, 3); 
-
-
--- ----------------------------
--- CRUD UPDATE population
--- ----------------------------
-
-UPDATE `CLIIINK2`.`population` SET `po_vi_id_fk`='4' WHERE `po_id`='1243';
-
+CALL insert_population ('test_insert', 2017 , 12, 3, 3, 3); 
 
 
 
