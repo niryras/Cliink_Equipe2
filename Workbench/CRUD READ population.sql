@@ -13,7 +13,6 @@ BEGIN
 END ||
 DELIMITER ;
 
-
 DELIMITER ||
 CREATE PROCEDURE `read_entreprise` ()
 BEGIN
@@ -40,14 +39,7 @@ FROM population;
 END ||
 DELIMITER ;
 
-
 # On insère une ligne de test en utilisant la procédure stockée
 CALL read_population ('123459', 'test_insert', 2020 , 12, 3, 3, 3); 
 CALL select_po ('123459', 'test_insert', 2020 , 12, 3, 3, 3); 
-
-
-
-
-
-
 
