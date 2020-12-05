@@ -1,5 +1,5 @@
 -- ----------------------------
--- CRUD INSERT logement
+-- CRUD INSERT logement 
 -- ----------------------------
 # Procédure stockée de type INSERT sur la table logement
 
@@ -51,6 +51,11 @@ CREATE PROCEDURE insert_categorie_logement (
 
 BEGIN
 
+# vérifier que le cl_nom de categorie_logement que l'on souhaite insérer n'est pas déjà pris
+IF EXISTS (SELECT * FROM categorie_logement WHERE categorie_logement.cl_nom = cl_nom_) THEN
+    SIGNAL SQLSTATE '50004' SET MESSAGE_TEXT = 'categorie_logement already existing';
+END IF;
+
 # Insertion
 INSERT INTO categorie_logement (cl_nom)
 VALUES (cl_nom_);
@@ -59,7 +64,7 @@ END ||
 DELIMITER ;
 
 # On insère une ligne de test en utilisant la procédure stockée
-CALL insert_categorie_logement ('test_insert'); 
+CALL insert_categorie_logement ('test_insert1'); 
 
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
@@ -116,35 +121,132 @@ CALL read_categorie_logement ();
 
 DELIMITER ||
 CREATE PROCEDURE update_logement (
-				 IN 				lo_nbre_ varchar(50), 
-                                    lo_vi_id_fk int,
-									lo_cl_id_fk int)
+				 IN 				lo_id_ int,
+									lo_nbre_ varchar(50), 
+                                    lo_vi_id_fk_ int,
+									lo_cl_id_fk_ int)
 
 BEGIN
 # Vérifier l'existence des valeurs des paramètres destinés à des clés étrangères
 # Permet au code python de relever les messages produits par la procdure SQL en cas d'erreurs de saisi de données
 
-IF NOT EXISTS ( SELECT * FROM categorie_socio_pro WHERE categorie_socio_pro.csp_id = po_csp_id_fk_) THEN
-		SIGNAL SQLSTATE '50002' SET MESSAGE_TEXT = 'categorie_socio_pro not found'; 
+IF NOT EXISTS ( SELECT * FROM categorie_logement WHERE categorie_logement.cl_id = lo_cl_id_fk_) THEN
+		SIGNAL SQLSTATE '50002' SET MESSAGE_TEXT = 'categorie_logement not found'; 
 END IF;
 
-IF NOT EXISTS ( SELECT * FROM age WHERE age.ag_id = po_ag_id_fk_) THEN
-		SIGNAL SQLSTATE '50003' SET MESSAGE_TEXT = 'age_not_found';
-END IF;
-
-IF NOT EXISTS ( SELECT * FROM ville WHERE ville.vi_id = po_vi_id_fk_) THEN
-		SIGNAL SQLSTATE '50004' SET MESSAGE_TEXT = 'ville_not_found';
+IF NOT EXISTS ( SELECT * FROM ville WHERE ville.vi_id = lo_vi_id_fk_) THEN
+		SIGNAL SQLSTATE '50002' SET MESSAGE_TEXT = 'ville not found'; 
 END IF;
 
 # Mise à jour
-UPDATE population
-SET po_id = po_id_, po_source = po_source_, po_annee = po_annee_, 
-po_nbre_pop = po_nbre_pop_, po_csp_id_fk = po_csp_id_fk_, po_ag_id_fk = po_ag_id_fk_, po_vi_id_fk = po_vi_id_fk_
-WHERE po_id = po_id_ ;
+UPDATE logement
+SET lo_id = lo_id_, lo_nbre = lo_nbre_, lo_vi_id_fk = lo_vi_id_fk_, lo_cl_id_fk = lo_cl_id_fk_
+WHERE lo_id = lo_id_ ;
 
 END ||
 DELIMITER ;
 
 # On insère une ligne de test en utilisant la procédure stockée
-CALL update_population ('123459', 'test_insert', 2020 , 12, 3, 3, 3); 
+CALL update_logement(234, 'test_insert',3,3); 
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+-- ----------------------------
+-- CRUD UPDATE categorie_logement
+-- ----------------------------
+# -- Procédure stockée de type UPDATE sur la table categorie_logement
+
+DELIMITER ||
+CREATE PROCEDURE update_categorie_logement (
+				 IN 				cl_id_ int,
+									cl_nom_ varchar(50))
+
+BEGIN
+# Permet au code python de relever les messages produits par la procdure SQL en cas d'erreurs de saisi de données
+
+# Mise à jour
+UPDATE categorie_logement
+SET cl_id = cl_id_, cl_nom = cl_nom_
+WHERE cl_id = cl_id_ ;
+
+END ||
+DELIMITER ;
+
+# On insère une ligne de test en utilisant la procédure stockée
+CALL update_categorie_logement(121, 'test_insert'); 
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+-- ----------------------------
+-- CRUD DELETE logement
+-- ----------------------------
+# -- Procédure stockée de type DELETE sur la table logement
+
+DROP PROCEDURE IF EXISTS `detele_logement`;
+
+DELIMITER ||
+CREATE PROCEDURE `detele_logement` (
+				IN 					lo_id_ int,
+                                    lo_vi_id_fk_ int,
+                                    lo_cl_id_fk_ int)
+BEGIN
+
+#--verification des clés étrangères pointant sur logement_id
+IF EXISTS (SELECT * FROM ville WHERE ville.vi_id = lo_vi_id_fk_) THEN 
+		SIGNAL SQLSTATE '50005' SET MESSAGE_TEXT = 'ville_id still present in ville: delete all entries or allow delete
+#on cascade and remove this check';
+END IF;
+
+IF EXISTS (SELECT * FROM categorie_logement WHERE categorie_logement.cl_id = lo_cl_id_fk_) THEN
+		SIGNAL SQLSTATE '50006' SET MESSAGE_TEXT = 'categorie_logement_id still present in categorie_logement: delete all entries or allow
+delete on cascade and remove this check';
+END IF;
+
+#--suppression
+DELETE
+FROM logement
+WHERE lo_id = lo_id_;
+END ||
+DELIMITER ;
+
+START TRANSACTION; 
+
+# On insère une ligne de test en utilisant la procédure stockée
+CALL detele_logement(1, 34, 35); 
+
+ROLLBACK; #-- on annule toutes les actions précédentes
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+-- ----------------------------
+-- CRUD DELETE categorie_logement
+-- ----------------------------
+# -- Procédure stockée de type DELETE sur la table categorie_logement
+
+DROP PROCEDURE IF EXISTS `detele_categorie_logement`;
+
+DELIMITER ||
+CREATE PROCEDURE `detele_categorie_logement` (
+				IN 					cl_id_ int)
+BEGIN
+
+#--suppression
+DELETE
+	FROM categorie_logement
+	WHERE cl_id = cl_id_;
+END ||
+DELIMITER ;
+
+START TRANSACTION; 
+
+# On insère une ligne de test en utilisant la procédure stockée
+CALL detele_categorie_logement(4); 
+
+ROLLBACK; #-- on annule toutes les actions précédentes
 
