@@ -188,25 +188,13 @@ CALL update_categorie_logement(121, 'test_insert');
 -- ----------------------------
 # -- Procédure stockée de type DELETE sur la table logement
 
-DROP PROCEDURE IF EXISTS `detele_logement`;
+DROP PROCEDURE IF EXISTS `delete_logement`;
 
 DELIMITER ||
-CREATE PROCEDURE `detele_logement` (
-				IN 					lo_id_ int,
-                                    lo_vi_id_fk_ int,
-                                    lo_cl_id_fk_ int)
+CREATE PROCEDURE `delete_logement` (
+				IN 					lo_id_ int)
+
 BEGIN
-
-#--verification des clés étrangères pointant sur logement_id
-IF EXISTS (SELECT * FROM ville WHERE ville.vi_id = lo_vi_id_fk_) THEN 
-		SIGNAL SQLSTATE '50005' SET MESSAGE_TEXT = 'ville_id still present in ville: delete all entries or allow delete
-#on cascade and remove this check';
-END IF;
-
-IF EXISTS (SELECT * FROM categorie_logement WHERE categorie_logement.cl_id = lo_cl_id_fk_) THEN
-		SIGNAL SQLSTATE '50006' SET MESSAGE_TEXT = 'categorie_logement_id still present in categorie_logement: delete all entries or allow
-delete on cascade and remove this check';
-END IF;
 
 #--suppression
 DELETE
@@ -218,7 +206,8 @@ DELIMITER ;
 START TRANSACTION; 
 
 # On insère une ligne de test en utilisant la procédure stockée
-CALL detele_logement(1, 34, 35); 
+CALL delete_logement(21); 
+CALL delete_logement(22); 
 
 ROLLBACK; #-- on annule toutes les actions précédentes
 
@@ -248,7 +237,7 @@ DELIMITER ;
 START TRANSACTION; 
 
 # On insère une ligne de test en utilisant la procédure stockée
-CALL detele_categorie_logement(4); 
+CALL detele_categorie_logement(5); 
 
 ROLLBACK; #-- on annule toutes les actions précédentes
 

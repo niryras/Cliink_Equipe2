@@ -94,6 +94,11 @@ CREATE PROCEDURE `detele_ville` (
 				IN 				 vi_id_ int)
 BEGIN
 
+# vérifier que le vi_nom de ville que l'on souhaite insérer n'est pas déja pris
+IF EXISTS (SELECT * FROM logement WHERE logement.lo_vi_id_fk = vi_id_) THEN
+    SIGNAL SQLSTATE '50005' SET MESSAGE_TEXT = 'logement already existing';
+END IF;
+
 #--suppression
 DELETE
 	FROM ville

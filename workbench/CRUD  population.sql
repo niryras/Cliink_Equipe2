@@ -144,11 +144,6 @@ CALL update_population ('123459', 'test_insert', 2020 , 12, 3, 3, 3);
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
 
- -- ----------------------------
--- CRUD DELETE population
--- ----------------------------
-# -- Procédure stockée de type DELETE sur la table population
-
 -- ----------------------------
 -- CRUD DELETE population
 -- ----------------------------
@@ -171,7 +166,8 @@ DELIMITER ;
 START TRANSACTION; 
 
 # On insère une ligne de test en utilisant la procédure stockée
-CALL delete_population (3); 
+CALL delete_population (111113); 
+CALL delete_population (111114); 
 
 ROLLBACK; #-- on annule toutes les actions précédentes
 
