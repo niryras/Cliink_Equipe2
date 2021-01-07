@@ -1,0 +1,405 @@
+USE CLIIINK2;
+
+-- ------------------------------
+-- PS DOUBLONS population
+-- ------------------------------
+# Procédure stockée pour vérifier les doublons sur la table population
+
+DROP PROCEDURE IF EXISTS `doublons_po`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_po ()
+
+BEGIN
+SELECT DISTINCT *
+FROM population AS po1
+WHERE EXISTS (
+              SELECT *
+              FROM population AS po2
+              WHERE po1.po_id <> po2.po_id
+              AND   po1.po_source = po2.po_source
+              AND   po1.po_annee = po2.po_annee
+              AND   po1.po_nbre_pop = po2.po_nbre_pop
+              AND   po1.po_csp_id_fk = po2.po_csp_id_fk
+              AND   po1.po_ag_id_fk = po2.po_ag_id_fk
+              AND   po1.po_vi_id_fk = po2.po_vi_id_fk);
+
+END ||
+DELIMITER ;
+
+# On insère une ligne de test en utilisant la procédure stockée
+CALL doublons_po ();
+
+-- ----------------------------
+-- TRIGGER doublons population
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_po`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_po
+    AFTER UPDATE ON population
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM population AS po1 WHERE EXISTS (SELECT * 
+    FROM population AS po2 WHERE po1.po_id <> po2.po_id 
+						   AND po1.po_source = po2.po_source
+						   AND po1.po_annee = po2.po_annee
+						   AND po1.po_nbre_pop = po2.po_nbre_pop
+						   AND po1.po_csp_id_fk = po2.po_csp_id_fk
+						   AND po1.po_ag_id_fk = po2.po_ag_id_fk
+						   AND po1.po_vi_id_fk = po2.po_vi_id_fk)) THEN 
+    SIGNAL SQLSTATE '50018' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ----------------------------
+-- PS doublons_ville
+-- ----------------------------
+# Procédure stockée pour vérifier les doublons sur la table ville
+
+DROP PROCEDURE IF EXISTS `doublons_ville`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_ville ()
+
+BEGIN
+SELECT DISTINCT *
+FROM ville AS v1
+WHERE EXISTS (
+              SELECT *
+              FROM ville AS v2
+              WHERE v1.vi_id <> v2.vi_id
+              AND   v1.vi_nom = v2.vi_nom);
+
+END || 
+DELIMITER ;
+
+CALL doublons_ville (); 
+
+-- ----------------------------
+-- TRIGGER doublons ville
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_ville`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_ville
+    AFTER UPDATE ON ville
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM ville AS v1 WHERE EXISTS (SELECT * 
+    FROM ville AS v2 WHERE v1.vi_id <> v2.vi_id AND v1.vi_nom = v2.vi_nom)) THEN 
+    SIGNAL SQLSTATE '50011' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ----------------------------
+-- PS DOUBLONS age
+-- ----------------------------
+# Procédure stockée pour vérifier les doublons sur la table age
+
+DROP PROCEDURE IF EXISTS `doublons_age`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_age ()
+
+BEGIN
+SELECT DISTINCT *
+FROM age AS ag1
+WHERE EXISTS (
+              SELECT *
+              FROM age AS ag2
+              WHERE ag1.ag_id <> ag2.ag_id
+              AND ag1.ag_tranche_age = ag2.ag_tranche_age);
+
+END ||
+DELIMITER ;
+
+CALL doublons_age (); 
+
+-- ----------------------------
+-- TRIGGER doublons age
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_age`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_age
+    AFTER UPDATE ON age
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM age AS ag1 WHERE EXISTS (SELECT * 
+    FROM age AS ag2 WHERE ag1.ag_id <> ag2.ag_id AND ag1.ag_tranche_age = ag2.ag_tranche_age)) THEN 
+    SIGNAL SQLSTATE '50012' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ------------------------------
+-- PS DOUBLONS categorie_socio_pro
+-- ------------------------------
+# Procédure stockée pour vérifier les doublons sur la table categorie_socio_pro
+
+DROP PROCEDURE IF EXISTS `doublons_csp`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_csp ()
+
+BEGIN
+SELECT DISTINCT *
+FROM categorie_socio_pro AS csp1
+WHERE EXISTS (
+              SELECT *
+              FROM categorie_socio_pro AS csp2
+              WHERE csp1.csp_id <> csp2.csp_id
+              AND   csp1.csp_nom = csp2.csp_nom);
+
+END ||
+DELIMITER ;
+
+CALL doublons_csp (); 
+
+-- ----------------------------
+-- TRIGGER doublons categorie_socio_pro
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_categorie_socio_pro`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_categorie_socio_pro
+    AFTER UPDATE ON categorie_socio_pro
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM categorie_socio_pro AS csp1 WHERE EXISTS (SELECT * 
+    FROM categorie_socio_pro AS csp2 WHERE csp1.csp_id <> csp2.csp_id AND csp1.csp_nom = csp2.csp_nom)) THEN 
+    SIGNAL SQLSTATE '50013' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ------------------------------
+-- PS DOUBLONS entreprise
+-- ------------------------------
+# Procédure stockée pour vérifier les doublons sur la table entreprise
+
+DROP PROCEDURE IF EXISTS `doublons_en`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_en ()
+
+BEGIN
+SELECT DISTINCT *
+FROM entreprise AS en1
+WHERE EXISTS (
+              SELECT *
+              FROM entreprise AS en2
+              WHERE en1.en_id <> en2.en_id
+              AND   en1.en_nom = en2.en_nom
+              AND   en1.en_siren = en2.en_siren
+              AND   en1.en_nic = en2.en_nic
+              AND   en1.en_adresse = en2.en_adresse
+              AND   en1.en_code_postal = en2.en_code_postal
+              AND   en1.en_vi_id_fk = en2.en_vi_id_fk
+              AND   en1.en_sa_id_fk = en2.en_sa_id_fk);
+
+END ||
+DELIMITER ;
+
+CALL doublons_en (); 
+
+-- ----------------------------
+-- TRIGGER doublons entreprise
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_entreprise`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_entreprise
+    AFTER UPDATE ON entreprise
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM entreprise AS en1 WHERE EXISTS (SELECT * 
+    FROM entreprise AS en2 WHERE en1.en_id <> en2.en_id 
+						   AND en1.en_nom = en2.en_nom 
+                           AND en1.en_siren = en2.en_siren
+                           AND en1.en_nic = en2.en_nic
+						   AND en1.en_adresse = en2.en_adresse
+                           AND en1.en_code_postal = en2.en_code_postal
+                           AND en1.en_vi_id_fk = en2.en_vi_id_fk
+                           AND en1.en_sa_id_fk = en2.en_sa_id_fk )) THEN 
+    SIGNAL SQLSTATE '50014' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ------------------------------
+-- PS DOUBLONS categorie_logement
+-- ------------------------------
+# Procédure stockée pour vérifier les doublons sur la table categorie_logement
+
+DROP PROCEDURE IF EXISTS `doublons_cl`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_cl ()
+
+BEGIN
+SELECT DISTINCT *
+FROM categorie_logement AS cl1
+WHERE EXISTS (
+              SELECT *
+              FROM categorie_logement AS cl2
+              WHERE cl1.cl_id <> cl2.cl_id
+              AND   cl1.cl_nom = cl2.cl_nom);
+
+END ||
+DELIMITER ;
+
+CALL doublons_age (); 
+
+-- ----------------------------
+-- TRIGGER doublons categorie_logement
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_categorie_logement`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_categorie_logement
+    AFTER UPDATE ON categorie_logement
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM categorie_logement AS cl1 WHERE EXISTS (SELECT * 
+    FROM categorie_logement AS cl2 WHERE cl1.cl_id <> cl2.cl_id AND cl1.cl_nom = cl2.cl_nom)) THEN 
+    SIGNAL SQLSTATE '50015' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ------------------------------
+-- PS DOUBLONS logement
+-- ------------------------------
+# Procédure stockée pour vérifier les doublons sur la table logement
+
+DROP PROCEDURE IF EXISTS `doublons_lo`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_lo ()
+
+BEGIN
+SELECT DISTINCT *
+FROM logement AS lo1
+WHERE EXISTS (
+              SELECT *
+              FROM logement AS lo2
+              WHERE lo1.lo_id <> lo2.lo_id
+              AND   lo1.lo_nbre = lo2.lo_nbre
+              AND   lo1.lo_vi_id_fk = lo2.lo_vi_id_fk
+              AND   lo1.lo_cl_id_fk = lo2.lo_cl_id_fk);
+
+END ||
+DELIMITER ;
+
+CALL doublons_lo ();
+
+-- ----------------------------
+-- TRIGGER doublons logement
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_logement`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_logement
+    AFTER UPDATE ON logement
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM logement AS lo1 WHERE EXISTS (SELECT * 
+    FROM logement AS lo2 WHERE lo1.lo_id <> lo2.lo_id 
+						 AND lo1.lo_nbre = lo2.lo_nbre
+						 AND lo1.lo_vi_id_fk = lo2.lo_vi_id_fk
+						 AND lo1.lo_cl_id_fk = lo2.lo_cl_id_fk)) THEN 
+    SIGNAL SQLSTATE '50016' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
+
+
+
+
+-- ------------------------------
+-- PS DOUBLONS secteur_activité
+-- ------------------------------
+# Procédure stockée pour vérifier les doublons sur la table secteur_activité
+
+DROP PROCEDURE IF EXISTS `doublons_sa`;
+
+DELIMITER ||
+CREATE PROCEDURE doublons_sa ()
+
+BEGIN
+SELECT DISTINCT *
+FROM secteur_activité AS sa1
+WHERE EXISTS (
+              SELECT *
+              FROM secteur_activité AS sa2
+              WHERE sa1.sa_id <> sa2.sa_id
+              AND   sa1.sa_nom = sa2.sa_nom);
+
+END ||
+DELIMITER ;
+
+CALL doublons_sa ();
+
+-- ----------------------------
+-- TRIGGER doublons secteur_activité
+-- ----------------------------
+DROP TRIGGER IF EXISTS `td_sa`;
+
+DELIMITER $$
+
+CREATE TRIGGER td_sa
+    AFTER UPDATE ON secteur_activité
+    FOR EACH ROW 
+
+BEGIN
+	IF EXISTS (SELECT DISTINCT * FROM secteur_activité AS sa1 WHERE EXISTS (SELECT * 
+    FROM secteur_activité AS sa2 WHERE sa1.sa_id <> sa2.sa_id 
+								 AND   sa1.sa_nom = sa2.sa_nom) THEN 
+    SIGNAL SQLSTATE '50017' SET MESSAGE_TEXT = 'doublons existing';
+END IF ;
+END $$
+DELIMITER ;
+
