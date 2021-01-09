@@ -206,6 +206,16 @@ def create_df_lo_en(NTL, EN):
     return request
 
 
+#def population(ville, population):
+    """
+        Créer le DataFrame population par ville avec le scatter.
+        Nécessite 2 int en arguments.
+        retourne un DataFrame.
+        Utiliser dans le graph creat_chart.
+    """
+    #request = pd.read_sql(request_%(pop_poids_ville), engine)
+    #return request
+
 ########################
 
 ### Fonctions Graphs ###
