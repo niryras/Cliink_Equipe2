@@ -463,13 +463,16 @@ def login():
 	return render_template("CliiinkLogin.html")
 
 
+@app.route("/charts")
+def charts():
+	return render_template('charts.html')
+
 @app.route("/profile")
 def profile():
 	if not g.user:
 		return redirect(url_for('login'))
-
-
-
+       
+        
 	villes = create_list('vi_nom', 'vi_nom', 'ville')
 	dates = create_list('DISTINCT(YEAR(date)) AS date', 'date', 'collecte')
 	date_ = " OR YEAR(date)= ".join(str(date) for date in dates)
@@ -516,6 +519,10 @@ def profile():
 	chart_indicator(PAH, PAHR, TCA, TCAR, PAL, PALR)
 
 	return render_template('profile.html', villes=villes, dates=dates, date_=date_)
+
+
+
+
 
 
 if __name__ == "__main__":
