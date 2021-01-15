@@ -32,7 +32,7 @@ UserName = config["user_name"] #Bin_(config["user_name"])._UserP()
 
 # On créer une liste utlisateur
 users =[]
-users.append(User(1,UserName, PassWord))
+users.append(User(1, UserName, PassWord))
 users.append(User(2,"Steph","3322"))
 usersL = [i.username for i in users]
 
@@ -60,7 +60,8 @@ _population = """SELECT * FROM population
 	JOIN ville
 		ON population.po_vi_id_fk = ville.vi_id
 	JOIN age
-		ON age.ag_id = population.po_ag_id_fk;"""
+		ON age.ag_id = population.po_ag_id_fk
+    WHERE csp_nom not in ('Total');"""
 df_population = pd.read_sql(_population, engine)
 
 # Création du DataFrame entreprise
@@ -84,6 +85,9 @@ df_pop2 = pd.read_sql(_pop2, engine)
 
 dfNouveau = df_population.groupby(by=["vi_nom", "ag_tranche_age"])["po_nbre_pop"].sum().reset_index(name="quantite")
 df_en = df_entreprise.groupby(by=["sa_nom", "vi_nom"])["en_id"].count().reset_index(name="quantite")
+
+
+
 
 def create_list(colonne1, colonne2, table):
     """
@@ -469,61 +473,56 @@ def charts():
 
 @app.route("/profile")
 def profile():
-	if not g.user:
-		return redirect(url_for('login'))
-       
-        
-	villes = create_list('vi_nom', 'vi_nom', 'ville')
-	dates = create_list('DISTINCT(YEAR(date)) AS date', 'date', 'collecte')
-	date_ = " OR YEAR(date)= ".join(str(date) for date in dates)
-	ville = "'{}'".format(request.args.get('ville', "'OR vi_nom='".join(villes)))
-	date = request.args.get('date', 2020)
-	df = creat_df(date, ville)
-	population = creat_df_population(ville)
-	df2 = creat_df2(date, ville)
-	df3 = creat_df3(date, ville)
-	EN = creat_df_entreprise(ville)
-	NTL_ = creat_df_logement(ville)
-	NTL = NTL_.lo_nbre.astype(int).sum()
-	df_lo_en = create_df_lo_en(NTL, EN)
-	creat_chart(df_lo_en, EN, NTL)
-	# ici on indique le poids total de précédante
-	reference_ = creat_Nrefenrence(date, ville)
-	#PTR = reference_.poids[0].astype(int)
-
-	PTR = (reference_.poids[0].astype(int) if isinstance(reference_.poids[0], float) else 0)
-
-
-
-	# ici on indique le ratio par jour de réference de l'année précendante
-	ndf = int(PTR//365)
-	# ici on indique le poids total de l'année en cours
-	PT = df.poids.sum()
-	# ici on indique moyenne poids par jour collect
-	MPJ = df.poids.sum()//365
-	# ici on indique le nombre total d'habitant
-	NTH = population.quantite.sum()
-	# Ici on indique le poids/ans par habitant de l'année en cours
-	PAH = (PT//NTH if (PT != 0) & (NTH != 0) else 0)
-	# Ici on indique le poids/ans par habitant de l'année precedente
-	PAHR = (PTR//NTH if (PTR != 0) & (NTH != 0) else 0)
-	# Ici on indique le poids/ans par foyer de l'année en cours
-	PAL = PT//NTL
-	# Ici on indique le poids/ans par foyer de l'année precedente
-	PALR = PTR//NTL
-	# Ici on indique le nombre de collecte total de l'année en cours
-	TCA = df3.poids.count()
-	# Ici on indique le nombre de collecte total de l'année precedente
-	TCAR = df2.poids.count()
-	creat_graph4(df, ndf)
-	chart_indicator(PAH, PAHR, TCA, TCAR, PAL, PALR)
-
-	return render_template('profile.html', villes=villes, dates=dates, date_=date_)
-
-
-
-
-
+    if not g.user:
+        return redirect(url_for('login'))
+    villes = create_list('vi_nom', 'vi_nom', 'ville')
+    dates = create_list('DISTINCT(YEAR(date)) AS date', 'date', 'collecte')
+    date_ = " OR YEAR(date)= ".join(str(date) for date in dates)
+    ville = "'{}'".format(request.args.get('ville', "'OR vi_nom='".join(villes)))
+    ville1 = "{}".format(request.args.get('ville', "Total"))
+    date = request.args.get('date', 2020)
+    df = creat_df(date, ville)
+    population = creat_df_population(ville)
+    df2 = creat_df2(date, ville)
+    df3 = creat_df3(date, ville)
+    EN = creat_df_entreprise(ville)
+    NTL_ = creat_df_logement(ville)
+    NTL = NTL_.lo_nbre.astype(int).sum()
+    df_lo_en = create_df_lo_en(NTL, EN)
+    creat_chart(df_lo_en, EN, NTL)
+    # ici on indique le poids total de précédante
+    reference_ = creat_Nrefenrence(date, ville)
+    #PTR = reference_.poids[0].astype(int)
+    
+    PTR = (reference_.poids[0].astype(int) if isinstance(reference_.poids[0], float) else 0)
+    
+    
+    
+    # ici on indique le ratio par jour de réference de l'année précendante
+    ndf = int(PTR//365)
+    # ici on indique le poids total de l'année en cours
+    PT = df.poids.sum()
+    # ici on indique moyenne poids par jour collect
+    MPJ = df.poids.sum()//365
+    # ici on indique le nombre total d'habitant
+    NTH = population.quantite.sum()
+    # Ici on indique le poids/ans par habitant de l'année en cours
+    PAH = (PT//NTH if (PT != 0) & (NTH != 0) else 0)
+    # Ici on indique le poids/ans par habitant de l'année precedente
+    PAHR = (PTR//NTH if (PTR != 0) & (NTH != 0) else 0)
+    # Ici on indique le poids/ans par foyer de l'année en cours
+    PAL = PT//NTL
+    # Ici on indique le poids/ans par foyer de l'année precedente
+    PALR = PTR//NTL
+    # Ici on indique le nombre de collecte total de l'année en cours
+    TCA = df3.poids.count()
+    # Ici on indique le nombre de collecte total de l'année precedente
+    TCAR = df2.poids.count()
+    creat_graph4(df, ndf)
+    chart_indicator(PAH, PAHR, TCA, TCAR, PAL, PALR)
+    #import random
+    #nombre = str(random.randint(100000,99999999))
+    return render_template('profile.html', villes=villes, dates=dates, date_=date_, ville1=ville1)
 
 if __name__ == "__main__":
 	app.run(debug=True)

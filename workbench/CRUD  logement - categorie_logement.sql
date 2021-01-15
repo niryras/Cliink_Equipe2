@@ -34,8 +34,40 @@ VALUES (lo_nbre_, lo_vi_id_fk_, lo_cl_id_fk_);
 END ||
 DELIMITER ;
 
+-- ----------------------------
+-- TEST UNITAIRE 
+-- ----------------------------
+
+# Debut du test
+START TRANSACTION;
+# il y a 2 clés étrangères pointant vers la table logement : lo_vi_id_fk et lo_cl_id_fk
+
+# On insert un clé primaire dans la table ville
+INSERT INTO ville (vi_nom)
+VALUES ('Monaco');
+# on récupère la clé primaire correspondante à la ligne que l'on vient d'insérer
+SET @vi_id = (SELECT vi_id FROM ville WHERE vi_nom = 'Monaco');
+
+# On insert un clé primaire dans la table categorie_logement
+INSERT INTO categorie_logement (cl_nom)
+VALUES ('duplex');
+# on récupère la clé primaire correspondante à la ligne que l'on vient d'insérer
+SET @cl_id = (SELECT cl_id FROM categorie_logement WHERE cl_nom = 'duplex');
+
+# on choisit la 1ere valeur dispo pour en_id
+SET @lo_id = (SELECT max(lo_id) FROM logement) +1;
+
+# on s'assure que le l'ID de logement que l'on souhaite insérer n'est pas déjà pris
+SET @lo_id_test = (SELECT lo_id FROM logement WHERE lo_id = @lo_id );
+SELECT * FROM logement WHERE lo_id = @lo_id_test; # On souhaite voir 0 lignes retournées
+
 # On insère une ligne de test en utilisant la procédure stockée
-CALL insert_logement ('test_insert', 1 , 1);
+CALL insert_logement ('15', @vi_id, @cl_id);
+
+# on s'assure que la ligne de test inserée existe bien
+SELECT * FROM logement WHERE lo_id = @lo_id;
+
+ROLLBACK; #-- on annule toutes les actions précédentes
 
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
