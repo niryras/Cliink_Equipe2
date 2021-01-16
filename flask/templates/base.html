@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="splide-2.4.21/dist/css/splide.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+<body>
+
+
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="#band" class="w3-bar-item w3-button w3-padding-large w3-hide-small">BAND</a>
+    <a href="#tour" class="w3-bar-item w3-button w3-padding-large w3-hide-small">TOUR</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
+    <div class="w3-dropdown-hover w3-hide-small">
+      <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>     
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="#" class="w3-bar-item w3-button">Merchandise</a>
+        <a href="#" class="w3-bar-item w3-button">Extras</a>
+        <a href="#" class="w3-bar-item w3-button">Media</a>
+      </div>
+    </div>
+    <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+  </div>
+</div>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">BAND</a>
+  <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">TOUR</a>
+  <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CONTACT</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">MERCH</a>
+</div>
+
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+
+
+   <div class=" w3-display-container w3-center">
+    <img src="img/cannes_image.jpg" style="width:100%">
+    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+      <h3>New York</h3>
+      <p><b>The atmosphere in New York is lorem ipsum.</b></p>    
+    </div>
+  </div>
+
+
+
+  <!-- The Band Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Projet CLIIINK2</h2>
+      <p class="w3-opacity"><i>Simplon en partenariat avec l'agglométation Cannes Pays de Lérins</i></p>
+      <p class="w3-justify">Le projet CLIIINK2 est une étude complémentaire au premier projet présenté à l'agglomération. Cette nouvelle
+        étude vise à apporter davantage de conclusions afin que des décsisions puissent etre prises avec davantage d'assurance.</p>
+    
+        <P>L'objet de cette application est d'analyser le rendement du dispositif au sein de l'agglomération. 
+          Cellec-ci c'est engagé à recycler davantage des déchets en verre. Un partenarait avec CLIIINK a débuté en 2017.
+          Le dispositif CLIIINK consiste a placer des balise IoT sur les bacs pour le dépots des déchets en verre, en sollicitant les 
+          usagers à recylcer davantage. Pour chaque dépot, un point est comtabilisé par l'application CLIIINK, que l'utilisateur va 
+          pourvoir réutiliser au sein des commerces de proximités, prenant eux aussi part à ce projet. Ainsi, l'agglométation cherche à favorier
+          une politique écologique, tout en dynamysant l'économie locale.</P>
+      
+          <p>Notre étude vise a anlyser les critères socio-démographiques des cinq ville de l'agglomération: Cannes, Le Cannet, Mandelieu-La-Napoule
+        Mougins et Théoule-sur-Mer. Pour cela, nous avons regroupé les données de l'INSEE référencant différents critères sociaux (population, catégories logement, secteur d'activité des entreprises, tranche d'age et catégories socio-professionnelles). Nous 
+        les avons associés aux données CLIIINK faisant référence aux collectes établi de 2017 à 2020 dans les cinq villes.</p> 
+       
+        <p>L'application regroupe deux pages. La première présente les données publique de l'INSEE. La seconde met en avant les résultats de l'étude
+          mené lors du projet CLIIIN2 à travers une représentation graphiques des données des socio-démographiques et des collectes.</p>
+  
+
+      <!--
+    <div class="w3-row w3-padding-32">
+      <div class="w3-third">
+        <p>Name</p>
+        <img src="graph_1.png" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+      </div>
+      <div class="w3-third">
+        <p>Name</p>
+        <img src="graph_2.png" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+      </div>
+      <div class="w3-third">
+        <p>Name</p>
+        <img src="graph_3.png" class="w3-round" alt="Random Name" style="width:60%">
+      </div>
+    </div>
+      -->
+
+
+
+
+
+
+
+
+
+<div class="splide w3-container w3-content w3-center w3-padding-64" data-splide='{"autoplay":"true", "rewind":"true", "speed":"5000", "rewindSpeed":"5000", "height":"500px", "pauseOnHover":"false", "pauseOnFocus":"false","arrows":"false", "gap":"10%", "autoWidth":"true", "autoHeigth":"true", "padding":{"left":"5%","right":"7%"} }'>
+  <div class="splide__track">
+    <ul class="splide__list">
+    <img class="splide__slide" src="img/graph_1.png" alt="graph_1">
+    <img class="splide__slide" src="img/graph_2.png" alt="graph_2">
+    <img class="splide__slide" src="img/graph_3.png" alt="graph_3">
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- End Page Content -->
+</div>
+
+<!-- Image of location/map 
+<img src="/w3images/map.jpg" class="w3-image w3-greyscale-min" style="width:100%">
+-->
+
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script> -->
+<script src="splide-2.4.21/dist/js/splide.min.js"></script>
+<script>
+  new Splide( '.splide' ).mount();
+</script>
+
+
+
+
+</body>
+</html>
