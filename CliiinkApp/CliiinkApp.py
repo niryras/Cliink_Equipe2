@@ -496,8 +496,6 @@ def profile():
     
     PTR = (reference_.poids[0].astype(int) if isinstance(reference_.poids[0], float) else 0)
     
-    
-    
     # ici on indique le ratio par jour de réference de l'année précendante
     ndf = int(PTR//365)
     # ici on indique le poids total de l'année en cours
