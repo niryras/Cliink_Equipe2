@@ -395,9 +395,9 @@ def creat_chart(lo_en, EN, NTL):
     
 
     fig.add_trace(go.Indicator(
-        mode = "number+delta",
+        mode = "number",
         value = EN,
-        delta = {'relative':True, 'reference': NTL},
+        delta = {'relative':False, 'reference': NTL},
         domain = {'x': [0.3,0.7], 'y': [0, 1]}))
     
 
