@@ -210,15 +210,17 @@ def create_df_lo_en(NTL, EN):
     return request
 
 
-#def population(ville, population):
-    """
-        Créer le DataFrame population par ville avec le scatter.
-        Nécessite 2 int en arguments.
-        retourne un DataFrame.
-        Utiliser dans le graph creat_chart.
-    """
-    #request = pd.read_sql(request_%(pop_poids_ville), engine)
-    #return request
+def insert_collecte(ville, date, poids):
+    #IC_="""
+    #       CALL insert_collecte (%s, %s, %s);
+    #  """
+    #IC = pd.execute(IC_%(ville, date, poids), engine)
+    IC_="""
+            INSERT INTO collecte(ville, date, poids)
+            VALUES (%s, "%s", %s);
+        """
+    IC = engine.execute(IC_%(ville, date, poids))
+    return IC
 
 ########################
 
@@ -471,10 +473,12 @@ def login():
 def charts():
 	return render_template('charts.html')
 
-@app.route("/profile")
+@app.route("/profile", methods=['post','get'])
 def profile():
     if not g.user:
         return redirect(url_for('login'))
+      
+    
     villes = create_list('vi_nom', 'vi_nom', 'ville')
     dates = create_list('DISTINCT(YEAR(date)) AS date', 'date', 'collecte')
     date_ = " OR YEAR(date)= ".join(str(date) for date in dates)
@@ -520,6 +524,28 @@ def profile():
     chart_indicator(PAH, PAHR, TCA, TCAR, PAL, PALR)
     #import random
     #nombre = str(random.randint(100000,99999999))
+    
+    if request.method =='POST':
+        print("je suis dedannnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnns")
+        ins_ville = request.form['Commune']
+        ins_date = request.form['Date']
+        ins_poids = request.form['Poids']
+        insert_collecte(ins_ville, ins_date, ins_poids)
+        #print("ceci est un commentaire", a)
+        #return "ok"
+    
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
     return render_template('profile.html', villes=villes, dates=dates, date_=date_, ville1=ville1)
 
 if __name__ == "__main__":
