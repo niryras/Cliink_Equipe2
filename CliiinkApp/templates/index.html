@@ -25,12 +25,10 @@ body {font-family: "Lato", sans-serif}
     <div class="w3-dropdown-hover w3-hide-small">
       <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>     
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="{{url_for('login')}}" class="w3-bar-item w3-button">Connect</a>
-        <a href="#" class="w3-bar-item w3-button">Extras</a>
         <a href="#" class="w3-bar-item w3-button">Media</a>
       </div>
     </div>
-    <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+    <a href="{{url_for('login')}}" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">CONNECT</a>
   </div>
 </div>
 
@@ -82,12 +80,12 @@ body {font-family: "Lato", sans-serif}
     et des collectes.  
     
 
-      <!-- Splide Section -->
+         <!-- Splide Section -->
     <div class="splide w3-container w3-content w3-center w3-padding-64"
     data-splide='{"autoplay":"true",
     "rewind":"true",
-    "speed":"5000",
-    "rewindSpeed":"5000",
+    "speed":"1000",
+    "rewindSpeed":"6000",
     "height":"500px",
     "pauseOnHover":"false",
     "pauseOnFocus":"false",
@@ -97,34 +95,34 @@ body {font-family: "Lato", sans-serif}
     "autoHeigth":"true",
     "padding":
     {"left":"5%","right":"7%"}
-    }'>
+    }'
+    style="max-width:800px" id="band">
       <div class="splide__track">
         <ul class="splide__list">
 
             <!-- -->
           <div class="splide__slide">
-      			<embed type="text/html" src="../static/img/jupyter-graph_2.html" width="600" height="550">
+      			<embed type="text/html" src="../static/img/jupyter-graph_2.html" width="800" height="550">
           </div> 
 
          <!-- -->
           <div class="splide__slide">
-      			<embed type="text/html" src="../static/img/charts/pop3d_parville.html" width="600" height="550">
+      			<embed type="text/html" src="../static/img/charts/pop3d_parville.html" width="800" height="550">
           </div>
 
             <!-- -->
           <div class="splide__slide">
-      			<embed type="text/html" src="../static/img/jupyter-graph_3.html" width="600" height="550">
+      			<embed type="text/html" src="../static/img/jupyter-graph_3.html" width="800" height="600">
           </div>
 
             <!-- -->
           <div class="splide__slide">
-      			<embed type="text/html" src="../static/img/jupyter-graph_4.html" width="600" height="550">
+      			<embed type="text/html" src="../static/img/jupyter-graph_4.html" width="800" height="600">
           </div>
 
         </ul>
       </div>
     </div>
-  </div>
 
 
 
